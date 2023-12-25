@@ -1,57 +1,18 @@
 
-#data <- read.csv("data2-4-14.csv")
-data <- read.csv("302_tests_10-10-14.csv")
-#data.nodes <- data[data$randnode == "None",]
 
-data1 <- data[!is.na(data$Recurscore),]
 
-startage <- round(mean(data1$Age,rm.na = TRUE))
+
+startage <- 49 # Keynote522 
 H <- 100 - startage # set time horizon in years
 T <- H+2  # set length of Markov trace
 
 draw <- function() {
-
-
-
-#  OPTIMAprelim parameter draw, 
-# assuming Oncotype DX cutoff >25 for High risk group, outcomes from SWOG8814 trial
 
 set.seed(seed)
 
 # inflator:
 inf <<- 1.066 # 2008 --> 2011
 
-
-#===== Chemotherapy assignment  ==============================================================================================================================
-
-
-#1 FEC75-80
-#2 FEC90-100
-#3 TC
-#4 FEC-T
-#5 E-CMF
-#6 FEC-Pw
-
-#chemo.type <- rdirichlet(Nsim,c(sum(data1$IntendedCT == 1, na.rm = TRUE),
-#                                sum(data1$IntendedCT == 2, na.rm = TRUE),
-#                                sum(data1$IntendedCT == 3, na.rm = TRUE),
-#                                sum(data1$IntendedCT == 4, na.rm = TRUE),
-#                                sum(data1$IntendedCT == 5, na.rm = TRUE),
-#                               sum(data1$IntendedCT == 6, na.rm = TRUE)))
-# 
-chemo.type <- rdirichlet(Nsim,c(sum(data1$randIntendedCT == "FEC75-80", na.rm = TRUE),
-                                sum(data1$randIntendedCT == "FEC90-100", na.rm = TRUE),
-                                sum(data1$randIntendedCT == "TC", na.rm = TRUE),
-                                sum(data1$randIntendedCT == "FEC-T", na.rm = TRUE),
-                                sum(data1$randIntendedCT == "E-CMF", na.rm = TRUE),
-                                sum(data1$randIntendedCT == "FEC-Pw", na.rm = TRUE)))
-								
-pFEC75  <<- chemo.type[,1]
-pFEC    <<- chemo.type[,2]
-pTC     <<- chemo.type[,3]
-pFECT   <<- chemo.type[,4]
-pEpiCMF <<- chemo.type[,5]
-pFECPw  <<- chemo.type[,6] 
 
 #============= TRANSITION PROBABILITIES =====================================================================================================================
 
